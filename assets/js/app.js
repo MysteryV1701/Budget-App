@@ -1,5 +1,4 @@
 let currentTransform = 0;
-
 window.onload = () => {
   if (!localStorage.getItem("defaultBudgetType")) {
     localStorage.setItem(
@@ -31,6 +30,7 @@ const formatCur = function (value, locale, currency) {
   return new Intl.NumberFormat(locale, {
     style: "currency",
     currency: currency,
+    minimumFractionDigits: 1,
   }).format(value);
 };
 const formatBudgetDate = function (date) {
@@ -310,6 +310,9 @@ function handleRenderCategory(list) {
             <img src=${category[1]} alt="" class="item-img">
         </div>
         <h4 class="item-heading">${category[0]}</h4>
+        <div class="tooltip tooltip-top" data-id="${category[0]}">
+          
+        </div>
     </div>
     `;
     budgetCategoryList.insertAdjacentHTML("beforeend", htmls);
@@ -323,6 +326,37 @@ function handleRenderCategory(list) {
           <h4 class="item-heading">Others</h4>
       </div>
     `;
+  document.querySelectorAll(".tooltip").forEach((item) => {
+    let htmls = "";
+    let totalIncomeOfCategory = 0;
+    let totalCostOfCategory = 0;
+    let income = JSON.parse(localStorage.getItem("income"));
+    let cost = JSON.parse(localStorage.getItem("cost"));
+    for (let i = 0; i < income.type.length; i++) {
+      if (income.type[i] === item.dataset.id) {
+        totalIncomeOfCategory += income.money[i];
+      }
+    }
+    htmls = `
+        <div class="tooltip-budget-item">
+          <p class="tooltip-text-income">INCOME</p>
+          <span>${formatCur(totalIncomeOfCategory, locale, currency)}</span>
+        <\div>
+      `;
+    item.insertAdjacentHTML("beforeend", htmls);
+    for (let i = 0; i < cost.type.length; i++) {
+      if (cost.type[i] === item.dataset.id) {
+        totalCostOfCategory += cost.money[i];
+      }
+    }
+    htmls = `
+        <div class="tooltip-budget-item">
+          <p class="tooltip-text-cost">COST</p>
+          <span>-${formatCur(totalCostOfCategory, locale, currency)}</span>
+        <\div>
+      `;
+    item.insertAdjacentHTML("beforeend", htmls);
+  });
   document.querySelectorAll(".delete-category").forEach((item) => {
     item.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -361,6 +395,7 @@ function handleRenderCategory(list) {
     };
   });
 }
+
 function addCategory(type, imgType) {
   const budgetTypeList = JSON.parse(localStorage.getItem("defaultBudgetType"));
   if (
@@ -387,6 +422,7 @@ function cancelCategoryModel() {
   document.querySelector("#input-category-name").value = "";
   document.querySelector("#input-category-img").value = "";
 }
+
 function handleChangeCategory() {
   const prevBtn = document.querySelector(".slider__btn-left");
   const newPrevBtn = prevBtn.cloneNode(true);
@@ -427,6 +463,7 @@ function handleChangeCategory() {
     if (currentTransform == 0) newPrevBtn.disabled = true;
   });
 }
+
 function addBudget(budgetType, incomeType, head, description, money) {
   let date = new Date();
   const newBudgetType = JSON.parse(localStorage.getItem(budgetType));
@@ -437,64 +474,3 @@ function addBudget(budgetType, incomeType, head, description, money) {
   newBudgetType.date.push(date.toLocaleDateString(locale, options));
   localStorage.setItem(budgetType, JSON.stringify(newBudgetType));
 }
-// Xu ly modal main
-function validateItem(item) {
-  if (item && item.value) return true;
-  return false;
-}
-function resetModalMain() {
-  document.querySelector("#input-heading").value = "";
-  document.querySelector("#input-money").value = "";
-  document.querySelector(".input-description").value = "";
-  document.querySelector(".modal-add-wrapper").classList.add("hidden");
-}
-
-document.querySelector(".confirm-btn").addEventListener("click", () => {
-  let budgetType = document.querySelector('input[name="type"]:checked');
-  let incomeType = document
-    .querySelector("#modal-add__heading")
-    .innerText.substring(
-      document.querySelector("#modal-add__heading").innerText.lastIndexOf(" ") +
-        1
-    )
-    .toLowerCase();
-  let head = document.querySelector("#input-heading");
-  let description = document.querySelector(".input-description");
-  let money = document.querySelector("#input-money");
-  let income = JSON.parse(localStorage.getItem("income"));
-  let cost = JSON.parse(localStorage.getItem("cost"));
-  let balance =
-    income.money.reduce((acc, mov) => acc + mov, 0) -
-    cost.money.reduce((acc, mov) => acc + mov, 0) -
-    parseInt(money.value);
-  if (money <= 0) {
-    alert("Money have to greater than 0$");
-  } else if (balance < 0 && budgetType.value === "cost") {
-    alert("The current amount of the budget is not enough");
-  } else if (
-    validateItem(budgetType) &&
-    validateItem(head) &&
-    validateItem(description) &&
-    validateItem(money)
-  ) {
-    addBudget(
-      budgetType.value,
-      incomeType,
-      head.value,
-      description.value,
-      parseInt(money.value)
-    );
-    resetModalMain();
-    document.querySelector('input[name="type"]:checked').checked = false;
-    updateUI();
-  } else {
-    alert("Please fill out all infomations!");
-  }
-});
-document.querySelector(".cancel-btn").addEventListener("click", () => {
-  resetModalMain();
-});
-
-document.querySelector(".close-btn").addEventListener("click", () => {
-  document.querySelector(".modal-details-wrapper").classList.add("hidden");
-});

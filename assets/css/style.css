@@ -119,9 +119,9 @@ body {
   width: 100%;
 }
 
-.slider__budget-type-wrapper {
+/* .slider__budget-type-wrapper {
   overflow: hidden;
-}
+} */
 
 .slider__btn-left,
 .slider__btn-right {
@@ -511,3 +511,63 @@ body {
 }
 
 /*# sourceMappingURL=style.css.map */
+/* Tooltip CSS */
+.tooltip {
+  opacity: 0;
+  color: #000;
+  position: absolute;
+  padding: 0.5rem 1rem;
+  background-color: #fff;
+  white-space: nowrap;
+  border-radius: 0.5rem;
+  pointer-events: none;
+  transition: 0.3s;
+  text-align: center;
+  box-shadow: 0 0 10px 0 black;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 15px;
+}
+.tooltip-top {
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.tooltip-top::after {
+  left: 50%;
+  transform: translate(-50%, 50%) rotate(45deg);
+  bottom: 1px;
+}
+.budget-type__item:hover > .tooltip-top {
+  top: -65px;
+}
+.tooltip::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #fff;
+  border-radius: 3px;
+}
+.budget-type__item:hover > .tooltip {
+  opacity: 1;
+}
+.tooltip > span {
+  font-weight: 600;
+}
+.tooltip-text-income {
+  color: #0ea6a0;
+  font-weight: 600;
+  font-size: 16px;
+}
+.tooltip-text-cost {
+  color: #ab0363;
+  font-weight: 600;
+  font-size: 16px;
+}
+.tooltip-budget-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
