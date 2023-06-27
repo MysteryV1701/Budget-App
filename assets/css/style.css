@@ -64,7 +64,6 @@ body {
 .slider__header-heading {
   margin-bottom: 4px;
 }
-
 .slider__budget-type,
 .budget-type__additional-item {
   display: flex;
@@ -119,9 +118,9 @@ body {
   width: 100%;
 }
 
-/* .slider__budget-type-wrapper {
+.slider__budget-type-wrapper {
   overflow: hidden;
-} */
+}
 
 .slider__btn-left,
 .slider__btn-right {
@@ -550,9 +549,9 @@ body {
   background-color: #fff;
   border-radius: 3px;
 }
-.budget-type__item:hover > .tooltip {
+/* .budget-type__item:hover > .tooltip {
   opacity: 1;
-}
+} */
 .tooltip > span {
   font-weight: 600;
 }
@@ -570,4 +569,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 3px;
+}
+.hidden {
+  display: none;
 }

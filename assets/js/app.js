@@ -23,8 +23,7 @@ function updateUI() {
 function handleRemoveItem(budgetType, typeOfCategory, indexOf) {
   removeBudgetItemByIdOfCategory(budgetType, typeOfCategory, indexOf);
   handleRenderBudgetItemList(typeOfCategory.id, budgetType, typeOfCategory);
-  handleRenderBudgetList(budgetType);
-  calcDisplayTotal();
+  updateUI();
 }
 const formatCur = function (value, locale, currency) {
   return new Intl.NumberFormat(locale, {
@@ -299,7 +298,6 @@ function handlePagination(htmls) {
     if (currentTransform == 0) prevPagination.classList.add("disabled");
   };
 }
-function handleTooltip(category) {}
 function handleRenderCategory(list) {
   budgetCategoryList.innerHTML = "";
   list.forEach((category, i) => {
@@ -326,37 +324,37 @@ function handleRenderCategory(list) {
           <h4 class="item-heading">Others</h4>
       </div>
     `;
-  document.querySelectorAll(".tooltip").forEach((item) => {
-    let htmls = "";
-    let totalIncomeOfCategory = 0;
-    let totalCostOfCategory = 0;
-    let income = JSON.parse(localStorage.getItem("income"));
-    let cost = JSON.parse(localStorage.getItem("cost"));
-    for (let i = 0; i < income.type.length; i++) {
-      if (income.type[i] === item.dataset.id) {
-        totalIncomeOfCategory += income.money[i];
-      }
-    }
-    htmls = `
-        <div class="tooltip-budget-item">
-          <p class="tooltip-text-income">INCOME</p>
-          <span>${formatCur(totalIncomeOfCategory, locale, currency)}</span>
-        <\div>
-      `;
-    item.insertAdjacentHTML("beforeend", htmls);
-    for (let i = 0; i < cost.type.length; i++) {
-      if (cost.type[i] === item.dataset.id) {
-        totalCostOfCategory += cost.money[i];
-      }
-    }
-    htmls = `
-        <div class="tooltip-budget-item">
-          <p class="tooltip-text-cost">COST</p>
-          <span>-${formatCur(totalCostOfCategory, locale, currency)}</span>
-        <\div>
-      `;
-    item.insertAdjacentHTML("beforeend", htmls);
-  });
+  // document.querySelectorAll(".tooltip").forEach((item) => {
+  //   let htmls = "";
+  //   let totalIncomeOfCategory = 0;
+  //   let totalCostOfCategory = 0;
+  //   let income = JSON.parse(localStorage.getItem("income"));
+  //   let cost = JSON.parse(localStorage.getItem("cost"));
+  //   for (let i = 0; i < income.type.length; i++) {
+  //     if (income.type[i] === item.dataset.id) {
+  //       totalIncomeOfCategory += income.money[i];
+  //     }
+  //   }
+  //   htmls = `
+  //       <div class="tooltip-budget-item">
+  //         <p class="tooltip-text-income">INCOME</p>
+  //         <span>${formatCur(totalIncomeOfCategory, locale, currency)}</span>
+  //       <\div>
+  //     `;
+  //   item.insertAdjacentHTML("beforeend", htmls);
+  //   for (let i = 0; i < cost.type.length; i++) {
+  //     if (cost.type[i] === item.dataset.id) {
+  //       totalCostOfCategory += cost.money[i];
+  //     }
+  //   }
+  //   htmls = `
+  //       <div class="tooltip-budget-item">
+  //         <p class="tooltip-text-cost">COST</p>
+  //         <span>-${formatCur(totalCostOfCategory, locale, currency)}</span>
+  //       <\div>
+  //     `;
+  //   item.insertAdjacentHTML("beforeend", htmls);
+  // });
   document.querySelectorAll(".delete-category").forEach((item) => {
     item.addEventListener("click", (e) => {
       e.stopPropagation();
