@@ -31,8 +31,8 @@ const formatBudgetDate = function (date) {
     Object.prototype.toString.call(date) === "[object Date]";
   const calcDaysPassed = (date1, date2) =>
     isDate(date1) && isDate(date2)
-      ? Math.round(
-          Math.abs(date1.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24)
+      ? Math.floor(
+          Math.abs(date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24)
         )
       : null;
   const daysPassed = calcDaysPassed(new Date(), new Date(date));
@@ -49,7 +49,7 @@ const calcDisplayTotal = function () {
   let income = JSON.parse(localStorage.getItem("income"));
   let cost = JSON.parse(localStorage.getItem("cost"));
   let balance =
-    income.money.reduce((acc, mov) => acc + mov, 0) -
-    cost.money.reduce((acc, mov) => acc + mov, 0);
+    income.money.reduce((acc, item) => acc + item, 0) -
+    cost.money.reduce((acc, item) => acc + item, 0);
   totalMoneyApp.textContent = formatCur(balance, locale, currency);
 };

@@ -11,7 +11,6 @@ function handleChangeCategory() {
   const itemWidth = 100 / 6;
   let currentTransform = 0;
   let transformMax = Math.ceil(itemList.length - 5) * itemWidth - itemWidth;
-  console.log(transformMax);
   function updateButtonsVisibility() {
     if (currentTransform <= -transformMax) {
       newNextBtn.disabled = true;
@@ -52,10 +51,14 @@ function addCategory(type, imgType) {
     alert(
       "Budget type already exist, please choose another name for budget type!"
     );
+    return;
   } else {
-    if (imgType)
-      budgetTypeList.push([type.value.toLowerCase().trim(), imgType]);
-    else {
+    if (imgType) {
+      budgetTypeList.push([
+        type.value.toLowerCase().trim(),
+        URL.createObjectURL(imgType),
+      ]);
+    } else {
       budgetTypeList.push([
         type.value.toLowerCase().trim(),
         "./assets/img/unavailable.png",
@@ -180,7 +183,7 @@ function handleRenderCategory(list) {
     document.querySelector(".create-category").onclick = () => {
       let type = document.querySelector("#input-category-name");
       let imgType = document.querySelector("#input-category-img").files[0];
-      addCategory(type, URL.createObjectURL(imgType));
+      addCategory(type, imgType);
       updateUI();
     };
   });
@@ -188,6 +191,7 @@ function handleRenderCategory(list) {
 function addBudget(budgetType, incomeType, head, description, money) {
   let date = new Date();
   const newBudgetType = JSON.parse(localStorage.getItem(budgetType));
+  console.log(incomeType);
   newBudgetType.type.push(incomeType);
   newBudgetType.description.push(description);
   newBudgetType.heading.push(head);
