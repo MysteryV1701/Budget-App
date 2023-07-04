@@ -60,6 +60,7 @@ body {
   align-items: center;
   gap: 30px;
   background-color: #e7f5f3;
+  position: relative;
 }
 .slider__header-heading {
   margin-bottom: 4px;
@@ -77,21 +78,79 @@ body {
 .slider__header-wrapper {
   min-width: 120px;
 }
-
+.slider__budget-type-wrapper {
+  overflow: hidden;
+}
 .budget-type__item {
-  flex: 1 1 20%;
-  display: flex;
-  flex-direction: column;
+  /* flex: 1 1 20%; */
+  /* display: flex; */
+  float: left;
+  /* flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center;*/
   cursor: pointer;
   position: relative;
+  margin-right: 22px;
 }
-.budget-type__item:not(:nth-child(6n)) {
-  margin-right: 24px;
+.tooltip {
+  opacity: 0;
+  color: #000;
+  padding: 0.5rem 1rem;
+  background-color: #fff;
+  white-space: nowrap;
+  border-radius: 0.5rem;
+  pointer-events: none;
+  transition: 0.3s;
+  text-align: center;
+  box-shadow: 0 0 10px 0 black;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 15px;
 }
-.budget-type__item:nth-child(6n) {
-  margin-right: 10px;
+.tooltip-top {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.tooltip-top::after {
+  left: 50%;
+  transform: translate(-50%, 50%) rotate(45deg);
+  bottom: 1px;
+}
+/* .budget-type__item:hover > .tooltip-top {
+  top: -65px;
+} */
+.tooltip::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #fff;
+  border-radius: 3px;
+}
+/* .budget-type__item:hover > .tooltip {
+  opacity: 1;
+  z-index: 999;
+} */
+.tooltip > span {
+  font-weight: 600;
+}
+.tooltip-text-income {
+  color: #0ea6a0;
+  font-weight: 600;
+  font-size: 16px;
+}
+.tooltip-text-cost {
+  color: #ab0363;
+  font-weight: 600;
+  font-size: 16px;
+}
+.tooltip-budget-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 .budget-type__item:hover > .delete-category {
   display: block;
@@ -104,6 +163,7 @@ body {
   top: 0;
   right: 0;
   display: none;
+  z-index: 10;
 }
 
 .item-img-container {
@@ -116,12 +176,8 @@ body {
 }
 .item-img {
   width: 100%;
-}
-
-.slider__budget-type-wrapper {
   overflow: hidden;
 }
-
 .slider__btn-left,
 .slider__btn-right {
   background-color: #fff;
@@ -511,65 +567,7 @@ body {
 
 /*# sourceMappingURL=style.css.map */
 /* Tooltip CSS */
-.tooltip {
-  opacity: 0;
-  color: #000;
-  position: absolute;
-  padding: 0.5rem 1rem;
-  background-color: #fff;
-  white-space: nowrap;
-  border-radius: 0.5rem;
-  pointer-events: none;
-  transition: 0.3s;
-  text-align: center;
-  box-shadow: 0 0 10px 0 black;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 15px;
-}
-.tooltip-top {
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.tooltip-top::after {
-  left: 50%;
-  transform: translate(-50%, 50%) rotate(45deg);
-  bottom: 1px;
-}
-.budget-type__item:hover > .tooltip-top {
-  top: -65px;
-}
-.tooltip::after {
-  content: "";
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  background-color: #fff;
-  border-radius: 3px;
-}
-/* .budget-type__item:hover > .tooltip {
-  opacity: 1;
-} */
-.tooltip > span {
-  font-weight: 600;
-}
-.tooltip-text-income {
-  color: #0ea6a0;
-  font-weight: 600;
-  font-size: 16px;
-}
-.tooltip-text-cost {
-  color: #ab0363;
-  font-weight: 600;
-  font-size: 16px;
-}
-.tooltip-budget-item {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
+
 .hidden {
   display: none;
 }

@@ -10,3 +10,9 @@ document.querySelector(".close-btn").addEventListener("click", () => {
 document.querySelector(".cancel-btn").addEventListener("click", () => {
   resetModalMain();
 });
+
+function cancelCategoryModel() {
+  document.querySelector(".modal-category-wrapper").classList.add("hidden");
+  document.querySelector("#input-category-name").value = "";
+  document.querySelector("#input-category-img").value = "";
+}

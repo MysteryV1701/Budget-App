@@ -1,11 +1,14 @@
-const totalMoneyApp = document.querySelector(".app__header-total");
-const budgetCategoryList = document.querySelector(".slider__budget-type");
 const defaultBudgetType = [
   ["salary", "./assets/img/salary.png"],
   ["gift", "./assets/img/gift.png"],
   ["friend", "./assets/img/friend.png"],
   ["invoice", "./assets/img/invoice.png"],
   ["shopping", "./assets/img/shopping.png"],
+  ["cooking", "./assets/img/cooking.png"],
+  ["shopping", "./assets/img/shopping.png"],
+  ["cooking", "./assets/img/cooking.png"],
+  ["shopping", "./assets/img/shopping.png"],
+  ["cooking", "./assets/img/cooking.png"],
 ];
 
 const income = {
